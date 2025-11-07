@@ -10,6 +10,7 @@ Quickstart
 6. uvicorn main:app --reload --port 8000
 
 API endpoints:
+
 - GET / -> hello message
 - GET /health -> {"message":"ok"}
 - POST /echo {"text": "..."} -> echoes text
