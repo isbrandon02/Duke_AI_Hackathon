@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function App() {
   return (
@@ -8,8 +8,11 @@ export default function App() {
         <p>Vite + React frontend skeleton</p>
       </header>
       <main>
-        <p>This is the frontend skeleton. The API is expected at <code>http://localhost:8000</code>.</p>
+        <p>
+          This is the frontend skeleton. The API is expected at{" "}
+          <code>http://localhost:8000</code>.
+        </p>
       </main>
     </div>
-  )
+  );
 }
