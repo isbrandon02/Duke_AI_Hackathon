@@ -6,6 +6,7 @@ import useFirebaseAuth from "./hooks/firebase";
 import LandingPage from "./pages/LandingPage";
 import LearningPage from "./pages/LearningPage";
 import ModulePage from "./pages/ModulePage";
+import CompetePage from "./pages/CompetePage";
 
 export default function App() {
   const { user, signInWithGoogle, signOut, loading, error } = useFirebaseAuth();
@@ -67,6 +68,9 @@ export default function App() {
         onSelectModule={(moduleId) => setActiveModule(moduleId)}
       />
     );
+  }
+  if (selectedMode === "compete") {
+    return <CompetePage onBack={() => setShowLanding(true)} />;
   }
 
   return (

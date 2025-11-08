@@ -6,6 +6,9 @@ import Aimg from "../letters/A.png";
 import Bimg from "../letters/B.png";
 import Cimg from "../letters/C.png";
 import Dimg from "../letters/D.png";
+import Eimg from "../letters/E.png";
+import Kimg from "../letters/K.png";
+import Uimg from "../letters/U.png";
 import SignRecognition from "../components/SignRecognition";
 
 const MODULE_CONTENT = {
@@ -54,6 +57,9 @@ export default function ModulePage({ moduleId, onBack = null }) {
     B: Bimg,
     C: Cimg,
     D: Dimg,
+    E: Eimg,
+    K: Kimg,
+    U: Uimg,
   };
 
   const content = MODULE_CONTENT[moduleId] || {

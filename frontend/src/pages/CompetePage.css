@@ -1,0 +1,134 @@
+.compete-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+.compete-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #eef2ff;
+}
+/* Make the Compete title more prominent and bluer (top-left) */
+.compete-header h2 {
+  margin: 0;
+  color: #2563eb; /* app primary blue */
+  font-weight: 800;
+}
+.compete-main {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.compete-main.with-leaderboard {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.leaderboard {
+  width: 320px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.04);
+}
+.leaderboard h4 {
+  margin: 0 0 12px 0;
+  color: #0b1220;
+}
+.rank-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rank-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: white;
+  border: 1px solid rgba(2, 6, 23, 0.04);
+}
+.rank-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.rank-pos {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.08);
+  color: #1e3a8a;
+  font-weight: 700;
+}
+.rank-name {
+  font-weight: 600;
+  color: #0b1220;
+}
+.rank-time {
+  color: #6b7280;
+  font-weight: 700;
+}
+/* special styles for top 3 */
+.rank-1 .rank-pos {
+  background: linear-gradient(90deg, #ffd54a, #ffb300);
+  color: #3b2b00;
+}
+.rank-2 .rank-pos {
+  background: linear-gradient(90deg, #e0e0e0, #bdbdbd);
+  color: #1f1f1f;
+}
+.rank-3 .rank-pos {
+  background: linear-gradient(90deg, #ffd7b5, #ffb085);
+  color: #3b2b00;
+}
+.difficulty-panel h3 {
+  margin: 0 0 12px 0;
+  color: #111827;
+}
+.difficulty-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.diff-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.diff-btn.selected {
+  background: #2563eb;
+  color: white;
+  border-color: #1e40af;
+}
+.ready-area {
+  margin-top: 8px;
+}
+.btn-ready {
+  background: #10b981;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+.coming-soon {
+  color: #6b7280;
+}
+.ready-state p {
+  margin: 0 0 8px 0;
+}
