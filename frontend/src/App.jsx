@@ -1,22 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import SignRecognition from "./components/SignRecognition";
 import "./App.css";
+import useFirebaseAuth from "./hooks/firebase";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { user, signInWithGoogle, signOut, loading, error } = useFirebaseAuth();
+  const [showLanding, setShowLanding] = useState(true);
 
-  const handleSignIn = () => {
-    // TODO: Replace with actual Firebase authentication
-    setIsSignedIn(true);
+  // When user signs out, return to landing state so next sign-in shows landing again
+  useEffect(() => {
+    if (!user) setShowLanding(true);
+  }, [user]);
+
+  const handleSignIn = async () => {
+    await signInWithGoogle();
   };
 
-  const handleSignOut = () => {
-    setIsSignedIn(false);
+  const handleSignOut = async () => {
+    await signOut();
   };
 
-  if (!isSignedIn) {
-    return <HomePage onSignIn={handleSignIn} />;
+  if (!user) {
+    return (
+      <HomePage onSignIn={handleSignIn} isLoading={loading} authError={error} />
+    );
+  }
+  // Show landing page first, then continue to the main app (SignRecognition)
+  if (showLanding) {
+    return (
+      <LandingPage
+        user={user}
+        onContinue={() => setShowLanding(false)}
+        onSignOut={handleSignOut}
+      />
+    );
   }
 
   return (
