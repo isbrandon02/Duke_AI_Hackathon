@@ -15,11 +15,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Initialize Firebase Admin SDK
 from services.firebase import initialize_firebase
 initialize_firebase()
-
 # Include routers
 from routers import api as api_router
 from routers import sign_scoring
