@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -7,9 +7,9 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-// Read config from Vite env variables. Create a .env with VITE_FIREBASE_* values
-// e.g. VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID, etc.
+// Read config from Vite env variables. Create a .env.local with VITE_FIREBASE_* values
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -19,19 +19,28 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
+/** ---------- Initialize (idempotent) ---------- **/
 let app;
-let auth;
+let _auth;
+let _db;
+
 try {
-  // Only initialize if we have at least the apiKey + authDomain
   if (firebaseConfig.apiKey && firebaseConfig.authDomain) {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
+    // Avoid "App already exists" if this file is imported more than once
+    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    _auth = getAuth(app);
+    _db = getFirestore(app);
   }
 } catch (e) {
-  // If initialization fails, leave auth undefined and let hook surface the error
+  // Leave _auth/_db undefined; hook will surface an error
   // console.warn("Firebase init error:", e);
 }
 
+/** Expose named exports for components that need them (Leaderboard, LettersMode) */
+export const auth = _auth;
+export const db = _db;
+
+/** ---------- Existing hook (unchanged behavior) ---------- **/
 export function useFirebaseAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,17 +49,13 @@ export function useFirebaseAuth() {
   useEffect(() => {
     if (!auth) {
       setLoading(false);
-      setError(
-        new Error("Firebase not configured. Set VITE_FIREBASE_* env vars.")
-      );
+      setError(new Error("Firebase not configured. Set VITE_FIREBASE_* env vars."));
       return;
     }
-
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -62,7 +67,6 @@ export function useFirebaseAuth() {
       setLoading(false);
       return null;
     }
-
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -86,37 +90,21 @@ export function useFirebaseAuth() {
   const getIdToken = async (forceRefresh = false) => {
     if (!auth || !auth.currentUser) return null;
     return auth.currentUser.getIdToken(forceRefresh);
+    // Note: callers should handle a null return value.
   };
 
-  // Helper: send the ID token to your backend for verification / creating a session
-  const sendIdTokenToBackend = async (
-    endpoint = "/auth/verify-token",
-    apiUrl
-  ) => {
+  const sendIdTokenToBackend = async (endpoint = "/auth/verify-token", apiUrl) => {
     const token = await getIdToken();
     if (!token) throw new Error("No ID token available");
-
-    const base =
-      apiUrl || import.meta.env.VITE_API_URL || "http://localhost:8000";
+    const base = apiUrl || import.meta.env.VITE_API_URL || "http://localhost:8000";
     const res = await fetch(`${base}${endpoint}`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     });
     return res;
   };
 
-  return {
-    user,
-    loading,
-    error,
-    signInWithGoogle,
-    signOut,
-    getIdToken,
-    sendIdTokenToBackend,
-  };
+  return { user, loading, error, signInWithGoogle, signOut, getIdToken, sendIdTokenToBackend };
 }
 
 export default useFirebaseAuth;
