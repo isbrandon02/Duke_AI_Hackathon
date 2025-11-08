@@ -1,5 +1,5 @@
-from ..models.sign_language_model import get_model
-from ..schemas.sign_language import SignLanguageRequest, SignLanguageResponse
+from models.sign_language_model import get_model
+from schemas.sign_language import SignLanguageRequest, SignLanguageResponse
 
 
 class SignLanguageService:

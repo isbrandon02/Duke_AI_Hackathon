@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from ..schemas.sign_language import SignLanguageRequest, SignLanguageResponse
-from ..services.sign_language_service import get_service
+from schemas.sign_language import SignLanguageRequest, SignLanguageResponse
+from services.sign_language_service import get_service
 
 router = APIRouter(prefix="/api/sign-language", tags=["sign-language"])
 

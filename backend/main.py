@@ -19,7 +19,7 @@ app.add_middleware(
 # Include routers
 from routers import api as api_router
 from routers import sign_scoring
-from .routers import sign_language as sign_language_router
+from routers import sign_language as sign_language_router
 app.include_router(api_router.router, prefix="")
 app.include_router(sign_scoring.router)
 app.include_router(sign_language_router.router)
