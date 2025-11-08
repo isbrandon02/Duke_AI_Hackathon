@@ -4,14 +4,24 @@ import SignRecognition from "./components/SignRecognition";
 import "./App.css";
 import useFirebaseAuth from "./hooks/firebase";
 import LandingPage from "./pages/LandingPage";
+import LearningPage from "./pages/LearningPage";
+import ModulePage from "./pages/ModulePage";
 
 export default function App() {
   const { user, signInWithGoogle, signOut, loading, error } = useFirebaseAuth();
   const [showLanding, setShowLanding] = useState(true);
+  const [selectedMode, setSelectedMode] = useState(null);
+  const [activeModule, setActiveModule] = useState(null);
 
   // When user signs out, return to landing state so next sign-in shows landing again
   useEffect(() => {
     if (!user) setShowLanding(true);
+  }, [user]);
+  useEffect(() => {
+    if (!user) {
+      setShowLanding(true);
+      setSelectedMode(null);
+    }
   }, [user]);
 
   const handleSignIn = async () => {
@@ -32,8 +42,29 @@ export default function App() {
     return (
       <LandingPage
         user={user}
-        onContinue={() => setShowLanding(false)}
+        onContinue={(mode) => {
+          setSelectedMode(mode);
+          setShowLanding(false);
+        }}
         onSignOut={handleSignOut}
+      />
+    );
+  }
+  // Render different pages depending on selected mode
+  if (selectedMode === "learning") {
+    // If a module is active, open the module page; otherwise show the pathway
+    if (activeModule) {
+      return (
+        <ModulePage
+          moduleId={activeModule}
+          onBack={() => setActiveModule(null)}
+        />
+      );
+    }
+    return (
+      <LearningPage
+        onBack={() => setShowLanding(true)}
+        onSelectModule={(moduleId) => setActiveModule(moduleId)}
       />
     );
   }
@@ -69,7 +100,7 @@ export default function App() {
         </div>
       </header>
       <main>
-        <SignRecognition />
+        <SignRecognition mode={selectedMode} />
       </main>
     </div>
   );
