@@ -6,6 +6,7 @@ import Aimg from "../letters/A.png";
 import Bimg from "../letters/B.png";
 import Cimg from "../letters/C.png";
 import Dimg from "../letters/D.png";
+import SignRecognition from "../components/SignRecognition";
 
 const MODULE_CONTENT = {
   letters: {
@@ -46,6 +47,7 @@ const MODULE_CONTENT = {
 
 export default function ModulePage({ moduleId, onBack = null }) {
   const [selectedWord, setSelectedWord] = useState(null);
+  const [showPractice, setShowPractice] = useState(false);
 
   const LETTER_IMAGES = {
     A: Aimg,
@@ -139,13 +141,46 @@ export default function ModulePage({ moduleId, onBack = null }) {
                 <div className="module-preview-actions">
                   <button
                     className="btn-try"
-                    onClick={() => alert(`Try for yourself: ${selectedWord}`)}
+                    onClick={() => setShowPractice(true)}
                   >
                     Try for yourself
                   </button>
                 </div>
               </div>
             </aside>
+          )}
+
+          {showPractice && (
+            <div
+              className="module-image-preview"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="module-image-inner">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <h3 className="module-image-title">
+                    Practice: {selectedWord}
+                  </h3>
+                  <div>
+                    <button
+                      className="btn-ghost"
+                      onClick={() => setShowPractice(false)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+                <div style={{ marginTop: 12 }}>
+                  <SignRecognition targetSign={selectedWord} />
+                </div>
+              </div>
+            </div>
           )}
         </section>
       </main>

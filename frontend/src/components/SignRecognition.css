@@ -45,7 +45,7 @@
 }
 
 .btn-start {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
 }
 
@@ -101,17 +101,21 @@
   background: white;
   border-radius: 6px;
   border: 2px solid #ddd;
-  transition: all 0.3s ease;
+  /* Make prediction box stable: avoid transitions/animations that change layout */
+  transition: none;
+  min-height: 120px; /* reserve vertical space so content updates don't shift other elements */
 }
 
 .prediction.correct {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   background: #e8f5e9;
-  animation: pulse 0.5s ease;
+  /* keep visual feedback but avoid scaling/transform animations that can trigger layout shifts */
+  animation: none;
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -125,6 +129,15 @@
   text-align: center;
   color: #333;
   font-weight: bold;
+}
+
+/* Reserve space for the confidence text so it doesn't push/pull layout when updating */
+.prediction-confidence {
+  min-height: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .prediction-confidence {
@@ -150,11 +163,10 @@
 .correct-indicator {
   margin-top: 10px;
   padding: 8px 16px;
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
   border-radius: 4px;
   font-weight: bold;
   font-size: 18px;
   display: inline-block;
 }
-

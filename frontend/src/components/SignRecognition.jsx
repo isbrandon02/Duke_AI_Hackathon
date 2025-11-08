@@ -1,12 +1,28 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useCamera } from '../hooks/useCamera';
-import { useSignRecognition } from '../hooks/useSignRecognition';
-import CameraFeed from './CameraFeed';
-import './SignRecognition.css';
+import { useState, useCallback, useEffect } from "react";
+import { useCamera } from "../hooks/useCamera";
+import { useSignRecognition } from "../hooks/useSignRecognition";
+import CameraFeed from "./CameraFeed";
+import "./SignRecognition.css";
 
-export default function SignRecognition({ targetSign = null, onCorrect = null }) {
-  const { videoRef, startCamera, stopCamera, isActive, error: cameraError } = useCamera();
-  const { prediction, confidence, isProcessing, error: recognitionError, predictSign, reset } = useSignRecognition();
+export default function SignRecognition({
+  targetSign = null,
+  onCorrect = null,
+}) {
+  const {
+    videoRef,
+    startCamera,
+    stopCamera,
+    isActive,
+    error: cameraError,
+  } = useCamera();
+  const {
+    prediction,
+    confidence,
+    isProcessing,
+    error: recognitionError,
+    predictSign,
+    reset,
+  } = useSignRecognition();
   const [isCorrect, setIsCorrect] = useState(false);
 
   // Check if prediction matches target sign
@@ -22,11 +38,14 @@ export default function SignRecognition({ targetSign = null, onCorrect = null })
     }
   }, [prediction, targetSign, onCorrect]);
 
-  const handleLandmarksDetected = useCallback((landmarks) => {
-    if (landmarks && landmarks.length === 21) {
-      predictSign(landmarks);
-    }
-  }, [predictSign]);
+  const handleLandmarksDetected = useCallback(
+    (landmarks) => {
+      if (landmarks && landmarks.length === 21) {
+        predictSign(landmarks);
+      }
+    },
+    [predictSign]
+  );
 
   const handleStart = () => {
     reset();
@@ -81,14 +100,10 @@ export default function SignRecognition({ targetSign = null, onCorrect = null })
           </div>
         )}
 
-        {isProcessing && (
-          <div className="processing">
-            <p>Processing...</p>
-          </div>
-        )}
+        {/* intentionally hide the processing text to avoid layout shifts; state remains available for logic */}
 
         {prediction && (
-          <div className={`prediction ${isCorrect ? 'correct' : ''}`}>
+          <div className={`prediction ${isCorrect ? "correct" : ""}`}>
             <div className="prediction-sign">
               <h2>{prediction}</h2>
             </div>
@@ -99,9 +114,7 @@ export default function SignRecognition({ targetSign = null, onCorrect = null })
               <div className="target-sign">
                 <p>Target: {targetSign}</p>
                 {isCorrect && (
-                  <div className="correct-indicator">
-                    ✓ Correct!
-                  </div>
+                  <div className="correct-indicator">✓ Correct!</div>
                 )}
               </div>
             )}
@@ -117,4 +130,3 @@ export default function SignRecognition({ targetSign = null, onCorrect = null })
     </div>
   );
 }
-

@@ -97,6 +97,33 @@
   text-align: center;
   box-shadow: 0 12px 40px rgba(2, 6, 23, 0.25);
 }
+/* Modal-specific stability improvements: fix size and prevent children layout shifts from re-centering */
+.module-image-preview .module-image-inner {
+  /* cap size to viewport and make inner content scrollable instead of changing modal size */
+  max-width: min(900px, 90vw);
+  max-height: calc(90vh - 40px);
+  width: min(820px, 95vw);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.module-image-preview .module-image-inner > div {
+  /* the SignRecognition component will live here; make it scroll if content overflows */
+  overflow: auto;
+}
+
+/* Disable the pulsing/scale animation for prediction inside the modal to avoid shaking */
+.module-image-preview .prediction {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Ensure camera container has fixed size inside the modal to avoid reflow */
+.module-image-preview .camera-container {
+  max-width: 720px;
+  width: 100%;
+  aspect-ratio: 4/3;
+}
 .module-preview-img {
   /* bigger responsive preview image without changing layout boxes */
   width: clamp(260px, 40vw, 720px);
