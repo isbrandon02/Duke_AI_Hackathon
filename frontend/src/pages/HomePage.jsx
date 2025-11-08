@@ -8,54 +8,63 @@ export default function HomePage({
 }) {
   return (
     <div className="home-page">
-      <div className="home-container">
-        <div className="home-content">
-          <h1 className="home-title">Sign Language Recognition</h1>
-          <p className="home-subtitle">
-            Learn and practice American Sign Language (ASL) with AI-powered
-            recognition
-          </p>
+      {/* Header */}
+      <header className="home-header">
+        <div className="home-logo">
+          <div className="logo-icon">👋</div>
+          <span className="logo-text">Gesturify</span>
+        </div>
+        <button
+          onClick={onSignIn}
+          disabled={isLoading}
+          className="btn-sign-in-header"
+        >
+          {isLoading ? "Loading..." : "SIGN IN"}
+        </button>
+      </header>
 
-          <div className="home-features">
-            <div className="feature">
-              <div className="feature-icon">🤚</div>
-              <h3>Real-time Recognition</h3>
-              <p>Get instant feedback on your sign language gestures</p>
-            </div>
-            <div className="feature">
-              <div className="feature-icon">🎯</div>
-              <h3>Practice Mode</h3>
-              <p>Improve your skills with interactive learning</p>
-            </div>
-            <div className="feature">
-              <div className="feature-icon">📊</div>
-              <h3>Track Progress</h3>
-              <p>Monitor your improvement over time</p>
-            </div>
+      {/* Main Content */}
+      <main className="home-main">
+        <div className="home-container">
+          <div className="home-illustration">
+            <div className="illustration-emoji">🤚</div>
+            <div className="illustration-emoji">✌️</div>
+            <div className="illustration-emoji">👌</div>
+            <div className="illustration-emoji">🤟</div>
+            <div className="illustration-emoji large">👋</div>
           </div>
 
-          <div className="home-actions">
-            <button
-              className="btn-sign-in"
-              onClick={onSignIn}
-              disabled={isLoading}
-            >
-              {isLoading ? "Opening sign-in..." : "Sign In to Get Started"}
-            </button>
-            <p className="home-help-text">
-              Sign in to access sign language recognition and practice features
-            </p>
-            {authError && (
-              <div
-                className="home-error"
-                style={{ color: "#ff4d4f", marginTop: 8 }}
+          <div className="home-content">
+            <h1 className="home-title">
+              The free, fun, and effective way to learn sign language!
+            </h1>
+
+            <div className="home-actions">
+              <button
+                onClick={onSignIn}
+                disabled={isLoading}
+                className="btn-get-started"
               >
-                {String(authError?.message || authError)}
-              </div>
-            )}
+                {isLoading ? "LOADING..." : "GET STARTED"}
+              </button>
+
+              <button
+                onClick={onSignIn}
+                disabled={isLoading}
+                className="btn-sign-in"
+              >
+                {isLoading ? "LOADING..." : "I ALREADY HAVE AN ACCOUNT"}
+              </button>
+
+              {authError && (
+                <div className="home-error">
+                  {String(authError?.message || authError)}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
