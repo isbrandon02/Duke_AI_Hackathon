@@ -1,0 +1,219 @@
+:root {
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --accent: #2563eb;
+}
+
+.learning-page {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.learning-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.learning-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.learning-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.path-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scrollable container for modules so the line scrolls with content */
+.modules-scroll {
+  width: 100%;
+  /* much closer to the left edge */
+  padding-top: 24px;
+  padding-right: 4%;
+  padding-bottom: 24px;
+  padding-left: 0.5rem; /* ~8px */
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modules-line {
+  /* hide the full background line so only connectors between modules are visible */
+  display: none;
+}
+
+.modules {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  z-index: 2; /* above line */
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
+}
+
+.module-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+
+.module-box {
+  min-width: 220px;
+  padding: 28px 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.12);
+  border: none;
+  text-align: center;
+  font-weight: 800;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.module-box:hover {
+  transform: translateY(-6px) scale(1.02) rotate(-0.5deg);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.18);
+}
+
+.module-badge {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+}
+
+.module-title {
+  font-size: 1.2rem;
+  line-height: 1.1;
+  color: inherit; /* ensure title uses the box color for accessible contrast */
+}
+
+/* blue-only color variants (match HomePage primary blue) */
+.module-box.greetings {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+.module-box.letters {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  color: white;
+}
+.module-box.family {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+.module-box.food {
+  background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+  color: #08203a;
+}
+.module-box.numbers {
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+}
+
+/* remaining modules: ensure every box has a visible colored background and proper contrast */
+.module-box.colors {
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+}
+.module-box.emotions {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+}
+.module-box.weather {
+  background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%);
+  color: #042630;
+}
+.module-box.time {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+}
+.module-box.travel {
+  background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+  color: #04263a;
+}
+.module-box.questions {
+  background: linear-gradient(135deg, #312e81 0%, #2563eb 100%);
+}
+
+/* badge overrides for lighter boxes so text stays readable */
+.module-box.food .module-badge,
+.module-box.weather .module-badge,
+.module-box.travel .module-badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #06202a;
+}
+
+.module-connector {
+  width: 96px; /* longer connector so the visible line shows between boxes */
+  height: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0.22),
+    rgba(37, 99, 235, 0.08)
+  );
+  border-radius: 999px;
+  box-shadow: inset 0 -2px 6px rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 860px) {
+  .modules-scroll {
+    /* keep a small left padding on medium screens */
+    padding-top: 20px;
+    padding-right: 4%;
+    padding-bottom: 20px;
+    padding-left: 0.5rem; /* ~8px */
+  }
+  .modules {
+    gap: 24px;
+  }
+  .module-box {
+    min-width: 120px;
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Stack vertically on narrow screens */
+  .path-wrapper {
+    flex-direction: column;
+  }
+  .modules-scroll {
+    padding: 24px 16px;
+    overflow-x: visible;
+  }
+  .modules-line {
+    width: 6px;
+    height: 60%;
+    left: 50%;
+    top: 20%;
+    transform: none;
+  }
+  .modules {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .module-connector {
+    display: none;
+  }
+}

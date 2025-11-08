@@ -1,0 +1,149 @@
+:root {
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --surface: #f8fafc;
+}
+
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.landing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.landing-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.landing-container {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  position: relative;
+}
+
+.panel {
+  flex: 1 1 0;
+  background: linear-gradient(
+    180deg,
+    rgba(37, 99, 235, 0.04),
+    rgba(37, 99, 235, 0.02)
+  );
+  border-radius: 12px;
+  padding: 48px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-inner {
+  max-width: 380px;
+  text-align: left;
+}
+
+.mode-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.mode-title {
+  font-size: 1.75rem;
+  color: #0f172a;
+  margin: 0 0 12px 0;
+}
+
+.mode-desc {
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.mode-btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-learn {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-compete {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid rgba(37, 99, 235, 0.12);
+}
+
+.divider {
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.08),
+    rgba(15, 23, 42, 0.02)
+  );
+  align-self: stretch;
+  border-radius: 1px;
+  margin: 0 8px;
+}
+
+/* Make divider thin and centered visually by adding pseudo line effect */
+.landing-container::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  bottom: 8%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.06),
+    rgba(15, 23, 42, 0.02)
+  );
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* On wide screens hide the explicit divider (we use pseudo) */
+@media (min-width: 900px) {
+  .divider {
+    display: none;
+  }
+  .panel {
+    padding: 64px;
+  }
+}
+
+@media (max-width: 899px) {
+  .landing-container {
+    flex-direction: column;
+  }
+  .landing-container::before {
+    display: none;
+  }
+  .panel {
+    width: 100%;
+  }
+  .divider {
+    height: 1px;
+    width: 100%;
+  }
+}

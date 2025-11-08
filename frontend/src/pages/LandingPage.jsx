@@ -1,40 +1,65 @@
 import React from "react";
-import "./HomePage.css";
+import "./LandingPage.css";
+import "./HomePage.css"; // reuse logo styles
+import logo from "../../../gesturify_logo.png";
 
 export default function LandingPage({ user, onContinue, onSignOut }) {
   return (
-    <div className="home-page">
-      <div className="home-container">
-        <div className="home-content">
-          <h1 className="home-title">Welcome</h1>
-          <p className="home-subtitle">You're signed in — nice to see you!</p>
-
-          <div style={{ marginTop: 16 }}>
-            <p>
-              Signed in as{" "}
-              <strong>{user?.email || user?.displayName || "User"}</strong>
-            </p>
-          </div>
-
-          <div className="home-actions" style={{ marginTop: 20 }}>
-            <button className="btn-sign-in" onClick={onContinue}>
-              Continue to App
-            </button>
-            <button
-              style={{
-                marginLeft: 12,
-                background: "transparent",
-                border: "1px solid #eee",
-                padding: "10px 16px",
-                borderRadius: 8,
-              }}
-              onClick={onSignOut}
-            >
-              Sign Out
-            </button>
-          </div>
+    <div className="landing-page">
+      <header className="landing-header">
+        <div className="home-logo" style={{ alignItems: "center" }}>
+          <img src={logo} alt="Gesturify logo" className="logo-img" />
+          <span className="logo-text">Gesturify</span>
         </div>
-      </div>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <div style={{ fontSize: 14, color: "#374151" }}>
+            {user?.email || user?.displayName || "Signed in"}
+          </div>
+          <button className="btn-ghost" onClick={onSignOut}>
+            Sign Out
+          </button>
+        </div>
+      </header>
+
+      <main className="landing-main">
+        <div className="landing-container">
+          <section className="panel left-panel">
+            <div className="panel-inner">
+              <div className="mode-emoji">📘</div>
+              <h2 className="mode-title">Learning Mode</h2>
+              <p className="mode-desc">
+                Practice signs at your pace. Guided exercises help you learn and
+                improve accuracy with immediate feedback.
+              </p>
+              <button
+                className="mode-btn btn-learn"
+                onClick={() => onContinue && onContinue("learning")}
+              >
+                Start Learning
+              </button>
+            </div>
+          </section>
+
+          <div className="divider" />
+
+          <section className="panel right-panel">
+            <div className="panel-inner">
+              <div className="mode-emoji">🏆</div>
+              <h2 className="mode-title">Compete Mode</h2>
+              <p className="mode-desc">
+                Test your skills in time-based challenges and leaderboards. See
+                how you compare with other learners.
+              </p>
+              <button
+                className="mode-btn btn-compete"
+                onClick={() => onContinue && onContinue("compete")}
+              >
+                Start Competing
+              </button>
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
