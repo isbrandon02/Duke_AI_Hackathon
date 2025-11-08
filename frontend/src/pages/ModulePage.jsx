@@ -136,6 +136,14 @@ export default function ModulePage({ moduleId, onBack = null }) {
                     if (e && e.target) e.target.src = logo;
                   }}
                 />
+                <div className="module-preview-actions">
+                  <button
+                    className="btn-try"
+                    onClick={() => alert(`Try for yourself: ${selectedWord}`)}
+                  >
+                    Try for yourself
+                  </button>
+                </div>
               </div>
             </aside>
           )}

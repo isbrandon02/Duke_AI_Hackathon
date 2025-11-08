@@ -137,3 +137,25 @@
   border-radius: 8px;
   font-weight: 600;
 }
+
+/* actions under preview image */
+.module-preview-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+.btn-try {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  width: 200px;
+  height: 40px;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+}
+.btn-try:hover {
+  filter: brightness(0.95);
+}
