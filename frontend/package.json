@@ -8,14 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@mediapipe/hands": "^0.4.1675469240",
     "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/drawing_utils": "^0.3.1620248257"
+    "@mediapipe/drawing_utils": "^0.3.1620248257",
+    "@mediapipe/hands": "^0.4.1675469240",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
-    "vite": "^5.0.0"
+    "vite": "^7.2.2"
   }
 }

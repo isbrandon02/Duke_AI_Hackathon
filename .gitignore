@@ -13,3 +13,8 @@ node_modules/
 
 # macOS
 .DS_Store
+
+# Firebase
+firebase-service-account.json
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
