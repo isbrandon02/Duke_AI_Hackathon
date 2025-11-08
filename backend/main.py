@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
@@ -17,27 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class PingResponse(BaseModel):
-    message: str
+# Include routers
+from .routers import api as api_router
 
-@app.get("/", response_model=PingResponse)
-async def read_root():
-    return {"message": "Hello from FastAPI backend"}
+app.include_router(api_router.router, prefix="")
 
-@app.get("/health", response_model=PingResponse)
-async def health():
-    return {"message": "ok"}
-
-# Example POST endpoint
-class EchoRequest(BaseModel):
-    text: str
-
-class EchoResponse(BaseModel):
-    text: str
-
-@app.post("/echo", response_model=EchoResponse)
-async def echo(req: EchoRequest):
-    return {"text": req.text}
 
 if __name__ == "__main__":
     import uvicorn
